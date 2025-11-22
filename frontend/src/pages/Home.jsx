@@ -11,7 +11,11 @@ export default function Home() {
     const fetchArticles = async () => {
       try {
         setLoading(true);
-        const res = await axios.get("/api/news"); // 🔥 Serverless endpoint
+
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/news`
+        );
+
         const mapped = res.data.articles.map((a) => ({
           title: a.title,
           logo: a.urlToImage,
@@ -20,13 +24,15 @@ export default function Home() {
           url: a.url,
           source: a.source?.name,
         }));
+
         setArticles(mapped);
-      } catch (e) {
-        console.error("Error fetching articles:", e);
+      } catch (error) {
+        console.error("Error fetching articles:", error);
       } finally {
         setLoading(false);
       }
     };
+
     fetchArticles();
   }, []);
 

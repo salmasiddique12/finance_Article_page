@@ -7,16 +7,11 @@ export default function Home() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // 🔑 Replace with your own API key (already added)
-  const API_KEY = "b42c9b1474d44029b704f3ca31871631";
-
   useEffect(() => {
     const fetchArticles = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(
-          `https://newsapi.org/v2/everything?q=finance&sortBy=publishedAt&language=en&apiKey=b42c9b1474d44029b704f3ca31871631`
-        );
+        const res = await axios.get("/api/news"); // 🔥 Serverless endpoint
         const mapped = res.data.articles.map((a) => ({
           title: a.title,
           logo: a.urlToImage,
@@ -37,17 +32,12 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-white dark:bg-black transition-colors duration-300">
-      {/* 🔥 Hero Section */}
       <HeroSection />
-
-      {/* 🔥 Articles Section */}
       <section className="px-6 py-10 max-w-7xl mx-auto">
-        <h2
-          className="text-5xl font-extrabold text-center mb-10 
-                          bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 
-                          bg-clip-text text-transparent 
-                          tracking-wide drop-shadow-md"
-        >
+        <h2 className="text-5xl font-extrabold text-center mb-10 
+          bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 
+          bg-clip-text text-transparent 
+          tracking-wide drop-shadow-md">
           ✨ Latest Finance Articles ✨
         </h2>
 
